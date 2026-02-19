@@ -1,0 +1,68 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+  background: #292727;
+}
+
+/*Навигационная панель*/
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav a {
+  margin-right: 13px;
+  margin-left: 13px;
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 15px;
+  background-color: #555;
+  color: #fff;
+  transition: background 0.2s;
+
+
+  font-size: 16px;       
+  font-weight: bold;
+  text-decoration: none;  
+}
+
+nav a:hover {
+  background-color: #333;
+}
+
+
+/*Основной блок с карточками*/
+
+main {
+  display: flex;
+  flex-wrap: wrap;  /* ← добавил ; */
+  gap: 13px;
+  padding: 13px;
+}
+
+div {
+  flex: 0 0 calc(33.33% - 15px);
+  border-radius: 15px;
+  overflow: hidden;  /* ← добавил ; */
+  background-color: #544F4F;
+  height: calc(33.33% - 15px);
+}
+
+div img {
+  width: 100%;   /* ← исправил */
+  height: 100%;  /* ← исправил */
+  object-fit: fill;
+}
+
+
+div p{
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  margin: 8px;
+}
+
+

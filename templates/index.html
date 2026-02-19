@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Описание страницы для поисковиков">
+  <title>Название страницы</title>
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <!-- Шапка -->
+  <header>
+    <nav>
+      <a href="/">Список</a>
+      <a href="/add">Добавить</a>
+    </nav>
+  </header>
+
+  <!-- Основной контент -->
+  <main>
+{% for card in cards %}
+<div>
+  <p>{{ card.text }}</p>
+  <img src="{{ url_for('static', filename='uploads/' + card.image) }}">
+</div>
+{% endfor %}
+  </main>
+
+  <!-- Подвал -->
+  <footer>
+    <p>&copy; 2024 Мой сайт. Все права защищены.</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
