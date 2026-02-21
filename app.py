@@ -1,12 +1,23 @@
 import os
 import sqlite3
+import subprocess
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
 # Папка куда будут сохраняться картинки
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Максимальный размер файла — 5 мегабайт
+app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
+
+# Разрешённые форматы картинок
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Функция для подключения к базе данных
 def get_db():
@@ -46,8 +57,14 @@ def upload():
     card_text = request.form['card_text']
     card_image = request.files['card_image']
 
+    # Проверяем что файл является картинкой
+    if not allowed_file(card_image.filename):
+        return 'Можно загружать только картинки!', 400
+
+    # Делаем имя файла безопасным
+    image_filename = secure_filename(card_image.filename)
+
     # Сохраняем картинку в папку static/uploads
-    image_filename = card_image.filename
     card_image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
 
     # Сохраняем текст и имя файла в базу данных
@@ -56,7 +73,6 @@ def upload():
     conn.commit()
     conn.close()
 
-    # После загрузки отправляем пользователя на главную страницу
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
